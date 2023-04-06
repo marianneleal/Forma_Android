@@ -1,51 +1,36 @@
 package com.example.forma
 
-import HabitUseCase
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
 
-class HabitViewModel(private val habitUseCase: HabitUseCase) : ViewModel() {
+class HabitViewModel(private val habitRepository: Repository) : ViewModel() {
 
-    private val _habits = MutableLiveData<List<Habit>>()
-    val habits: LiveData<List<Habit>>
+    private val _habits = MutableStateFlow<List<Habit>>(emptyList())
+    val habits: MutableStateFlow<List<Habit>>
         get() = _habits
 
     init {
-        loadHabits()
+        // loadHabits()
     }
 
-    fun loadHabits() {
-        viewModelScope.launch {
-            _habits.value = habitUseCase.getAllHabits()
-        }
+    suspend fun loadHabits(): List<Habit> {
+        return habitRepository.getAllHabits().value ?: emptyList()
     }
 
-    fun addHabit(habit: Habit) {
-        viewModelScope.launch {
-            habitUseCase.addHabit(habit)
-            loadHabits()
-        }
+    suspend fun addHabit(habit: Habit) {
+        habitRepository.addHabit(habit)
     }
 
-    fun deleteHabit(habit: Habit) {
-        viewModelScope.launch {
-            habitUseCase.deleteHabit(habit)
-            loadHabits()
-        }
+
+    suspend fun updateHabit(habit: Habit) {
+        habitRepository.updateHabit(habit)
     }
 
-    fun updateHabit(habit: Habit) {
-        viewModelScope.launch {
-            habitUseCase.updateHabit(habit)
-            loadHabits()
-        }
+    suspend fun deleteHabit(habit: Habit) {
+        habitRepository.deleteHabit(habit)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        habitUseCase.onDestroy()
+    fun onDestroy() {
+        // cleanup code here
     }
 }
