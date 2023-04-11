@@ -85,5 +85,7 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
     implementation 'com.google.code.gson:gson:2.8.8'
+    implementation "androidx.compose.material:material:${compose_ui_version}"
+
 
 }

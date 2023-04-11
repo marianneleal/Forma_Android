@@ -4,6 +4,7 @@ import androidx.room.*
 import java.util.*
 
 @Entity(tableName = "habits")
+@TypeConverters(Converter::class)
 data class Habit(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
