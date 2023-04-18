@@ -1,30 +1,28 @@
-package com.example.forma
+package com.example.forma.data
 import android.content.Context
 import androidx.room.*
+import com.example.forma.models.Converter
+import com.example.forma.models.Habit
+import com.example.forma.models.Task
 
-
-@Database(entities = [Habit::class], version = 1)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun habitDao(): HabitDatabaseDao
-}
 
 @Database(entities = [Habit::class, Task::class], version = 1)
+@TypeConverters(Converter::class)
 abstract class HabitDatabase: RoomDatabase() {
 
-    abstract val habitDatabaseDao: HabitDatabaseDao
-
-    private lateinit var INSTANCE: HabitDatabase
+    abstract val habitDao: HabitDatabaseDao
+}
+    lateinit var INSTANCE: HabitDatabase
     fun getDatabase(context: Context): HabitDatabase {
         synchronized(HabitDatabase::class.java) {
             if (!::INSTANCE.isInitialized) {
                 INSTANCE = Room.databaseBuilder(
                     context,
                     HabitDatabase::class.java,
-                    "CocktailMaker"
+                    "HabitDatabase"
                 )
                     .build()
             }
         }
         return INSTANCE
     }
-}

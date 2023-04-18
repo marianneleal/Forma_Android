@@ -20,19 +20,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import androidx.navigation.navArgument
+import com.example.forma.data.HabitViewModel
+import com.example.forma.models.Habit
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DetailScreen(habit: Habit?, navController: NavController) {
+    var viewModel = HabitViewModel()
     val colorPickerController = rememberColorPickerController()
-    var name by remember {
+    var
+            name by remember {
         mutableStateOf("Habit Name")
     }
     var colorPickerOpen by remember {
@@ -81,7 +87,7 @@ fun DetailScreen(habit: Habit?, navController: NavController) {
             .fillMaxWidth()
     ) {
         Spacer(modifier = Modifier.height(8.dp))
-        Text("Habit Name Here When Created", fontSize = 34.sp, fontWeight = FontWeight.Bold)
+        Text(habit?.name ?: "New Habit", fontSize = 34.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(20.dp))
         Text("Habit Information", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         Card(
@@ -210,7 +216,15 @@ fun DetailScreen(habit: Habit?, navController: NavController) {
             ) {
                 Row() {
 
-                    Button(onClick = { /*TODO*/ },)
+                    Button(onClick = {
+                        if (habit != null) {
+                            habit.name = name
+                            habit.color = selectedColor.toArgb()
+                            viewModel.viewModelScope.launch { viewModel.addHabit(habit) }
+
+
+                        }
+                                     },)
                     {
                         Text("Add Task")
                     }

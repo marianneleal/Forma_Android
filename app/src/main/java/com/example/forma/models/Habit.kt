@@ -1,4 +1,4 @@
-package com.example.forma
+package com.example.forma.models
 
 import androidx.room.*
 import java.util.*
@@ -7,9 +7,8 @@ import java.util.*
 @TypeConverters(Converter::class)
 data class Habit(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val name: String,
-    val tasks: List<Task>,
-    val color: Int,
-    var isCompleted: Boolean,
+    var name: String,
+    var tasks: List<Task>,
+    var color: Int,
     var dueDate: Date?
 )

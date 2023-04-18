@@ -1,4 +1,4 @@
-package com.example.forma
+package com.example.forma.screens
 
 // sealed class only allows to create subclasses in the same file
 sealed class Screen(val route: String) {

@@ -1,4 +1,4 @@
-package com.example.forma
+package com.example.forma.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

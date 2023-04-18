@@ -1,6 +1,5 @@
 package com.example.forma
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,27 +13,30 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.forma.data.HabitViewModel
+import com.example.forma.models.Habit
+import com.example.forma.screens.Screen
 
 @Composable
 fun HomeScreen(viewModel: HabitViewModel, navController: NavController) {
-    val habits = remember { mutableStateOf(emptyList<Habit>()) }
-    LaunchedEffect(true) {
-        habits.value = viewModel.habits.value
-    }
+   val habits = remember { mutableStateOf(viewModel.habits) }
+    val test = viewModel.loadTestHabits()
+
+
     Column(modifier = Modifier.fillMaxSize()) {
         TopAppBar(
-            title = { Text(text = "Habits") },
+            title = { Text(text = "My Habits") },
             backgroundColor = MaterialTheme.colors.primary
         )
         LazyColumn(
             modifier = Modifier.padding(horizontal = 16.dp),
             contentPadding = PaddingValues(vertical = 16.dp)
         ) {
-            items(count = habits.value.size) { index ->
+            items(count = habits.value.value.size) { index ->
                 HabitRow(
-                    habit = habits.value[index],
+                    habit = habits.value.value[index],
                     onClick = {
-                        navController.navigate(Screen.DetailScreen.route + "/${habits.value[index].id}")
+                        navController.navigate(Screen.DetailScreen.route + "/${habits.value.value[index].id}")
                     }
 
                 )

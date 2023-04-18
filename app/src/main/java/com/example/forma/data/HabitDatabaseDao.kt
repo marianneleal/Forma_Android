@@ -1,7 +1,9 @@
-package com.example.forma
+package com.example.forma.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.forma.models.Habit
+
 @Dao
 interface HabitDatabaseDao {
 
