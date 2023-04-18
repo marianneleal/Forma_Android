@@ -68,14 +68,14 @@ fun DetailScreen(habit: Habit?, navController: NavController) {
     mCalendar.time = Date()
 
     // store date in string format
-    val mDate = remember { mutableStateOf("") }
+    val mDate = remember { mutableStateOf(Date()) }
 
     // Declaring DatePickerDialog and setting
     // initial values as current values (present year, month and day)
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate.value = "$mDayOfMonth/${mMonth+1}/$mYear"
+            mDate.value = Date(mYear, mMonth, mDayOfMonth)
         }, mYear, mMonth, mDay
     )
 
@@ -177,7 +177,7 @@ fun DetailScreen(habit: Habit?, navController: NavController) {
                                 .clip(RoundedCornerShape(20))
 
                                 .clickable {
-                                    mDate.value = ""
+                                    // mDate.value = null
                                     toggleDatePicker = false
                                 }
 
@@ -185,7 +185,6 @@ fun DetailScreen(habit: Habit?, navController: NavController) {
                             Text("Remove Due Date", modifier = Modifier.padding(10.dp))
                         }
                     }
-                }
                 }
             }
         }
@@ -216,14 +215,7 @@ fun DetailScreen(habit: Habit?, navController: NavController) {
             ) {
                 Row() {
 
-                    Button(onClick = {
-                        if (habit != null) {
-                            habit.name = name
-                            habit.color = selectedColor.toArgb()
-                            viewModel.viewModelScope.launch { viewModel.addHabit(habit) }
-
-
-                        }
+                    Button(onClick = { /*TODO*/
                                      },)
                     {
                         Text("Add Task")
@@ -234,7 +226,18 @@ fun DetailScreen(habit: Habit?, navController: NavController) {
             }
 
 
-        Button(onClick = { /*TODO*/ },
+        Button(onClick = {
+                val habitToSave = habit ?: Habit(name,selectedColor.toArgb(),mDate.value, listOf())
+                habitToSave.name = name
+                habitToSave.color = selectedColor.toArgb()
+                viewModel.viewModelScope.launch { viewModel.addHabit(habitToSave)
+                navController.navigateUp()
+                    viewModel.loadHabits()
+                }
+
+
+
+                         },
             modifier = Modifier.align(Alignment.End)
         )
         {

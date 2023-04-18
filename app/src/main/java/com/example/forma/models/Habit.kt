@@ -6,9 +6,11 @@ import java.util.*
 @Entity(tableName = "habits")
 @TypeConverters(Converter::class)
 data class Habit(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     var name: String,
-    var tasks: List<Task>,
     var color: Int,
-    var dueDate: Date?
-)
+    var dueDate: Date?,
+    var tasks: List<Task>,
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}

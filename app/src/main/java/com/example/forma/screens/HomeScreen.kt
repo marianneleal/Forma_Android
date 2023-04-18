@@ -62,7 +62,7 @@ private fun HabitList(habitViewModel: HabitViewModel, navController: NavControll
     LazyColumn {
         items(habits.size) { habit ->
             HabitRow(habit = habits[habit], onClick = {
-                navController.navigate(Screen.DetailScreen.route)
+                navController.navigate(Screen.DetailScreen.route + "/${habits[habit].id}")
             })
         }
     }

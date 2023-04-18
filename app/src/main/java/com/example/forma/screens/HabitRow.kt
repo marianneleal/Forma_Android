@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.forma.models.Habit
 import com.example.forma.models.Task
+import java.util.*
 
 
 @Composable
@@ -47,6 +48,7 @@ fun HabitRow(habit: Habit, onClick: () -> Unit) {
 @Preview
 @Composable
 fun HabitRowPreview() {
-    val habit = Habit(0,"Sample Habit", listOf(Task(0,"bla", false,), Task(1,"blabla", true)), Color.Blue.toArgb(),null)
+    val habit = Habit("Sample Habit", Color.Blue.toArgb(),
+        Date(),listOf(Task(0,"bla", false,), Task(1,"blabla", true)))
     HabitRow(habit = habit, onClick = {})
 }

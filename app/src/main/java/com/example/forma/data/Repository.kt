@@ -1,6 +1,7 @@
 package com.example.forma.data
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.forma.models.Habit
 
@@ -9,7 +10,7 @@ class Repository(application: Application) {
     private val database = getDatabase(application)
     private val habitDao = database.habitDao
 
-    fun getAllHabits(): LiveData<List<Habit>> {
+    fun getAllHabits(): List<Habit> {
         return habitDao.getAll()
     }
 
@@ -18,6 +19,7 @@ class Repository(application: Application) {
     }
 
     suspend fun addHabit(habit: Habit) {
+        Log.d("Repository", "addHabit() called")
         habitDao.insert(habit)
     }
 

@@ -1,13 +1,16 @@
 package com.example.forma.data
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.forma.data.Repository
 import com.example.forma.models.Habit
 import com.example.forma.models.Task
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HabitViewModel : ViewModel() {
     private val habitRepository: Repository = Repository(application = Application())
@@ -45,10 +48,14 @@ class HabitViewModel : ViewModel() {
 
 
     suspend fun loadHabits() {
-        _habits.value = habitRepository.getAllHabits().value ?: emptyList()
+        withContext(Dispatchers.IO) {
+            habits.value = habitRepository.getAllHabits()
+        }
     }
 
+
     suspend fun addHabit(habit: Habit) {
+        Log.d("ViewModel", "addHabit() called")
         habitRepository.addHabit(habit)
         loadHabits()
     }

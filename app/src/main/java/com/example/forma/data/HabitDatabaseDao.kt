@@ -1,5 +1,6 @@
 package com.example.forma.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.forma.models.Habit
@@ -8,7 +9,7 @@ import com.example.forma.models.Habit
 interface HabitDatabaseDao {
 
     @Query("SELECT * FROM habits")
-    fun getAll(): LiveData<List<Habit>>
+    fun getAll(): List<Habit>
 
     @Query("SELECT * FROM habits WHERE id = :id")
     suspend fun getById(id: Int): Habit?
