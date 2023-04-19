@@ -6,7 +6,7 @@ import com.example.forma.models.Habit
 import com.example.forma.models.Task
 
 
-@Database(entities = [Habit::class, Task::class], version = 1)
+@Database(entities = [Habit::class, Task::class], version = 3)
 @TypeConverters(Converter::class)
 abstract class HabitDatabase: RoomDatabase() {
 
@@ -21,6 +21,7 @@ abstract class HabitDatabase: RoomDatabase() {
                     HabitDatabase::class.java,
                     "HabitDatabase"
                 )
+                    .fallbackToDestructiveMigration()
                     .build()
             }
         }

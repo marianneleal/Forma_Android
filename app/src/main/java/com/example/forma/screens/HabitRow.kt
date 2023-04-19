@@ -49,6 +49,6 @@ fun HabitRow(habit: Habit, onClick: () -> Unit) {
 @Composable
 fun HabitRowPreview() {
     val habit = Habit("Sample Habit", Color.Blue.toArgb(),
-        Date(),listOf(Task(0,"bla", false,), Task(1,"blabla", true)))
+        Date())
     HabitRow(habit = habit, onClick = {})
 }
