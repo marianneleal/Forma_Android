@@ -33,8 +33,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.forma.data.DetailViewModel
-import com.example.forma.models.Habit
-import com.example.forma.models.Task
 import com.example.forma.screens.TaskRow
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
@@ -52,11 +50,25 @@ fun DetailScreen(habitId: Long, navController: NavController) {
         mutableStateOf(DetailViewModel(context, habitId))
     }
 
-    if (viewModel.loading) {
-        Text("Loading")
-    } else {
-        DetailScreenLoaded(viewModel, navController)
-    }
+
+        if (viewModel.loading) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(8.dp),
+                    strokeWidth = 4.dp,
+                    color = MaterialTheme.colors.primary
+                )
+                Text("Loading")
+            }
+        } else {
+            DetailScreenLoaded(viewModel, navController)
+        }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
