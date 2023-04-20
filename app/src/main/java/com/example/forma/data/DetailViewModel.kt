@@ -33,7 +33,7 @@ class DetailViewModel(context: Context, habitId: Long): ViewModel() {
             loading = false
             habit = Habit(
                 name = "New Habit",
-                color = Color.White.toArgb(),
+                color = Color.LightGray.toArgb(),
                 dueDate = null,
             )
         }
@@ -70,26 +70,26 @@ class DetailViewModel(context: Context, habitId: Long): ViewModel() {
         }
     }
 
-    fun addTasks() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                for (task in tasks.value) {
-                    taskRepository.insert(task)
-                }
-            }
-        }
-        Log.d("DetailViewModel", "addTask() called")
+    fun addTask(name: String) {
+        val task = Task(
+            name = name,
+            habitId = habit.id,
+            completed = false,
+        )
+        _tasks.value = _tasks.value.plus(task).toMutableList()
     }
 
     fun deleteTask(task: Task) {
+        _tasks.value = _tasks.value.minus(task) as MutableList<Task>
         viewModelScope.launch {
             taskRepository.delete(task)
-            loadTasks()
         }
     }
 
-    suspend fun updateHabit(habit: Habit) {
-        habitRepository.update(habit)
+    fun updateTask(task: Task) {
+        task.completed = !task.completed
+        viewModelScope.launch {
+            taskRepository.update(task)
+        }
     }
-
 }

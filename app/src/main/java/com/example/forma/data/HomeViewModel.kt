@@ -28,11 +28,11 @@ class HomeViewModel(context: Context) : ViewModel() {
         }
     }
      fun deleteHabit(habit: Habit) {
-        Log.d("VM", "deleteHabit() called")
-        viewModelScope.launch(Dispatchers.IO) {
+         _habits.value = _habits.value.minus(habit)
+         Log.d("VM", "deleteHabit() called")
+         viewModelScope.launch(Dispatchers.IO) {
             habitRepository.delete(habit)
-            loadHabits()
-        }
+         }
     }
 
     override fun onCleared() {

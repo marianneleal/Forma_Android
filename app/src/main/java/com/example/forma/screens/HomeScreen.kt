@@ -19,9 +19,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.forma.data.HomeViewModel
 import com.example.forma.screens.Screen
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -53,7 +55,7 @@ private fun HabitList(viewModel: HomeViewModel, navController: NavController) {
     val habits by viewModel.habits.collectAsState(emptyList())
 
     LazyColumn {
-        items(habits.size) { index ->
+        items(habits.size, key = {index -> habits[index].id}) { index ->
             val habit = habits[index]
             val dismissState = rememberDismissState()
             if (dismissState.isDismissed(DismissDirection.EndToStart)) {

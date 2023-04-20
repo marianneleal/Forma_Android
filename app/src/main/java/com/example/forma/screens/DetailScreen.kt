@@ -62,6 +62,7 @@ fun DetailScreen(habitId: Long, navController: NavController) {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DetailScreenLoaded(viewModel: DetailViewModel, navController: NavController) {
+    val tasks by viewModel.tasks.collectAsState(mutableListOf())
     var taskName by remember { mutableStateOf("") }
     val colorPickerController = rememberColorPickerController()
     var name by remember {
@@ -286,8 +287,7 @@ fun DetailScreenLoaded(viewModel: DetailViewModel, navController: NavController)
                         confirmButton = {
                             Button(
                                 onClick = {
-                                        val newTask = Task(name = taskName, completed = false, habitId = 0)
-                                       viewModel.tasks.value.add(newTask)
+                                        viewModel.addTask(taskName)
                                         showAlertDialog = false
 
                                     taskName = ""
@@ -309,10 +309,12 @@ fun DetailScreenLoaded(viewModel: DetailViewModel, navController: NavController)
 
                 }
                 LazyColumn() {
-                    items(count = viewModel.tasks.value.size) { index ->
+                    items(count = tasks.size, key = {index -> tasks[index].hashCode() } ) { index ->
+                        val task = tasks[index]
+
                         val dismissState = rememberDismissState()
                         if (dismissState.isDismissed(DismissDirection.EndToStart)) {
-                            viewModel.deleteTask(viewModel.tasks.value[index])
+                            viewModel.deleteTask(task)
                         }
                         SwipeToDismiss(
                             state = dismissState,
@@ -353,8 +355,8 @@ fun DetailScreenLoaded(viewModel: DetailViewModel, navController: NavController)
                                 }
                             },
                             dismissContent = {
-                                TaskRow(task = viewModel.tasks.value[index]) {
-                                    viewModel.deleteTask(viewModel.tasks.value[index])
+                                TaskRow(task = task) {
+                                    viewModel.updateTask(task)
                                 }
                             })
                     }

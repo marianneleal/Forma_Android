@@ -11,27 +11,35 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
+import com.example.forma.data.DetailViewModel
 import com.example.forma.models.Task
+import kotlinx.coroutines.launch
 
 @Composable
 fun TaskRow(task: Task, onClick: () -> Unit) {
-    var completed by remember { mutableStateOf(false) }
+    var completed by remember { mutableStateOf(task.completed) }
 
     Card(
     modifier = Modifier
         .fillMaxWidth()
-        .padding(vertical = 4.dp, horizontal = 8.dp)
-        .clickable(onClick = onClick),
+        .padding(vertical = 4.dp, horizontal = 8.dp),
     elevation = 4.dp
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Checkbox(checked = completed, onCheckedChange = { completed = it })
+            Checkbox(
+                checked = completed,
+                onCheckedChange = {
+                    completed = it
+                    onClick()
+                })
             Spacer(modifier = Modifier.width(6.dp))
-            Text(text = task.name, style = MaterialTheme.typography.h6)
+            Text(text = task.name, style = if (!completed) MaterialTheme.typography.h6 else MaterialTheme.typography.h6.copy(color = Color.LightGray))
         }
     }
 }
