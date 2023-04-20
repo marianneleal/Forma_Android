@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -112,8 +113,17 @@ fun DetailScreenLoaded(viewModel: DetailViewModel, navController: NavController)
         modifier = Modifier
             .fillMaxWidth()
     ) {
+        TopAppBar(
+            navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(Icons.Filled.ArrowBack, contentDescription = "back")
+                }
+            },
+            title = { Text(text = viewModel.habit.name) },
+            backgroundColor = MaterialTheme.colors.primary
+        )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(viewModel.habit.name, fontSize = 34.sp, fontWeight = FontWeight.Bold)
+        //Text(viewModel.habit.name, fontSize = 34.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(20.dp))
         Text("Habit Information", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         Card(

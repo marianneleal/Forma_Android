@@ -29,7 +29,7 @@ fun TaskRow(task: Task, onClick: () -> Unit) {
     elevation = 4.dp
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(2.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Checkbox(

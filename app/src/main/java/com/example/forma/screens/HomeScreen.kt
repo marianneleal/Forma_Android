@@ -30,23 +30,35 @@ import kotlinx.coroutines.launch
 fun HomeScreen(navController: NavController) {
     val viewModel = HomeViewModel(LocalContext.current)
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        TopAppBar(
-            title = { Text(text = "My Habits") },
-            backgroundColor = MaterialTheme.colors.primary
-        )
-        HabitList(viewModel = viewModel, navController = navController )
-        FloatingActionButton(
-            onClick = {
-                // navController.navigate(Screen.DetailScreen.route)
-                navController.navigate(Screen.DetailScreen.withArgs("0"))
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "My Habits") },
+                backgroundColor = MaterialTheme.colors.primary
+            )
+        },
+        content = { padding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+            ) {
 
+            HabitList(viewModel = viewModel, navController = navController)
+                FloatingActionButton(
+                    onClick = {
+                        navController.navigate(Screen.DetailScreen.withArgs("0"))
+                    },
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp)
+                ) {
+                    Icon(Icons.Filled.Add, contentDescription = "Add Habit")
+                }
             }
-        ) {
-            Icon(Icons.Filled.Add, contentDescription = "Add Habit")
-        }
 
-    }
+        },
+    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
