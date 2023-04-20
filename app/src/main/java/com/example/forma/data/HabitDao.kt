@@ -10,7 +10,7 @@ interface HabitDao {
     suspend fun getAll(): List<Habit>
 
     @Query("SELECT * FROM habits WHERE id = :id")
-    suspend fun getById(id: Int): Habit?
+    suspend fun getById(id: Long): Habit?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(habit: Habit): Long

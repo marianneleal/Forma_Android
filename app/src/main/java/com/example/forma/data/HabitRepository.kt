@@ -14,13 +14,13 @@ class HabitRepository(context: Context) {
         return habitDao.getAll()
     }
 
-    suspend fun getHabitById(id: Int): Habit? {
+    suspend fun getHabitById(id: Long): Habit? {
         return habitDao.getById(id)
     }
 
-    suspend fun insert(habit: Habit) {
+    suspend fun insert(habit: Habit): Long {
         Log.d("Repository", "addHabit() called")
-        habitDao.insert(habit)
+        return habitDao.insert(habit)
     }
 
     suspend fun update(habit: Habit) {

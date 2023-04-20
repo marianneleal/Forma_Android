@@ -18,12 +18,10 @@ class HomeViewModel(context: Context) : ViewModel() {
     private var selectedHabit: Habit? = null
 
     init {
-        viewModelScope.launch {
-            loadHabits()
-        }
+        loadHabits()
     }
 
-    fun loadHabits() {
+    private fun loadHabits() {
         viewModelScope.launch {
             habits.value = habitRepository.getAllHabits()
             Log.d("HomeViewModel", "loadHabits() called")

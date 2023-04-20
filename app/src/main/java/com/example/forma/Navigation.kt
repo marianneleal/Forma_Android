@@ -15,7 +15,6 @@ import com.example.forma.screens.Screen
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Navigation(navController: NavHostController) {
-
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
         composable(route = "home") {
             HomeScreen(navController = navController)
@@ -24,13 +23,13 @@ fun Navigation(navController: NavHostController) {
             route = "detail" + "/{habitId}",
             arguments = listOf(
                 navArgument("habitId") {
-                    type = NavType.IntType
-                    defaultValue = 0
+                    type = NavType.LongType
+                    defaultValue = -1
                 }
             )
         ) {
             DetailScreen(
-                habit = null,
+                habitId = it.arguments?.getLong("habitId") ?: -1,
                 navController = navController
             )
         }

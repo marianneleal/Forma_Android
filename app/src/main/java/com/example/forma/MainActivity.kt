@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.*
 import androidx.room.Room
 import com.example.forma.data.HabitDatabase
-import com.example.forma.data.Repository
+import com.example.forma.data.HabitRepository
 import com.example.forma.ui.theme.FormaTheme
 
 
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
             HabitDatabase::class.java,
             "HabitDatabase"
         ).build()
-        val repository = Repository(applicationContext as Application)
+        val habitRepository = HabitRepository(applicationContext as Application)
         setContent {
             FormaTheme {
                 val navController = rememberNavController()
