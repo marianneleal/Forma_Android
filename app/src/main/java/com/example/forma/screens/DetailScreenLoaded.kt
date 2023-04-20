@@ -51,39 +51,26 @@ fun DetailScreenLoaded(viewModel: DetailViewModel, navController: NavController)
     }
 
     var selectedColor by remember { mutableStateOf( Color(viewModel.habit.color) ) }
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
-    val mContext = LocalContext.current
-
-    // Declaring integer values
-    // for year, month and day
-    val mYear: Int
-    val mMonth: Int
-    val mDay: Int
 
     // Initializing a Calendar
     val mCalendar = Calendar.getInstance()
-
-    // Fetching current year, month and day
-    mYear = mCalendar.get(Calendar.YEAR)
-    mMonth = mCalendar.get(Calendar.MONTH)
-    mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
-
     mCalendar.time = Date()
 
     // store date
-    val mDate = remember { mutableStateOf<Date?>(null) }
+    val mDate = remember { mutableStateOf<Date?>(viewModel.habit.dueDate) }
 
-    // Declaring DatePickerDialog and setting
-    // initial values as current values (present year, month and day)
+//     Declaring DatePickerDialog and setting
+//     initial values as current values (present year, month and day)
     val datePickerDialog = DatePickerDialog(
-        mContext,
+        LocalContext.current,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
+            // viewModel.habit.dueDate = Date(mYear, mMonth, mDayOfMonth)
             mDate.value = Date(mYear, mMonth, mDayOfMonth)
-        }, mYear, mMonth, mDay
+        }, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH)
     )
+
     var showAlertDialog by remember { mutableStateOf(false) }
 
-    var toggleDatePicker by remember { mutableStateOf(false) }
     Scaffold(
         content = { padding ->
     Column(
@@ -164,52 +151,28 @@ fun DetailScreenLoaded(viewModel: DetailViewModel, navController: NavController)
                         },
                     elevation = 4.dp
                 ) {
-                    if (mDate.value == null) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 3.dp, horizontal = 16.dp)
-                        ) {
-                            Text("No Due Date", modifier = Modifier.padding(5.dp))
-                            Spacer(modifier = Modifier.weight(1f))
-                            Switch(
-                                checked = false,
-                                onCheckedChange = {
-                                    toggleDatePicker = it
-                                    if (!it) {
-                                        mDate.value = null
-                                    }
-                                    datePickerDialog.show()
-                                },
-                            )
-                        }
-                    } else {
-                        val dateFormatter = SimpleDateFormat("dd MMMM", Locale.getDefault())
-                        val formattedDate: String =
-                            mDate.value?.let { dateFormatter.format(it) } ?: "Select a date"
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 3.dp, horizontal = 16.dp)
-                        ) {
-                            Text(
-                                text = "Due Date:  $formattedDate",
-                                modifier = Modifier.weight(1f)
-                            )
-                            Switch(
-                                checked = toggleDatePicker,
-                                onCheckedChange = {
-                                    toggleDatePicker = it
-                                    if (!it) {
-                                        mDate.value = null
-                                    }
-                                },
-                            )
-                        }
-                    }
+                    val dateFormatter = SimpleDateFormat("dd MMMM", Locale.getDefault())
+                    val formattedDate: String = mDate.value?.let { "Date: ${dateFormatter.format(it)}" } ?: "No Due Date"
 
+                Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 3.dp, horizontal = 16.dp)
+                    ) {
+                        Text(formattedDate, modifier = Modifier.padding(5.dp))
+                        Spacer(modifier = Modifier.weight(1f))
+                        Switch(
+                            checked = mDate.value != null,
+                            onCheckedChange = {
+                                  if (mDate.value == null) {
+                                        datePickerDialog.show()
+                                    } else {
+                                        mDate.value = null
+                                  }
+                            },
+                        )
+                    }
                 }
             }
             if (colorPickerOpen) {

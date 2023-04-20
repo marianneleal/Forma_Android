@@ -19,28 +19,28 @@ import java.util.*
 @Composable
 fun DetailScreen(habitId: Long, navController: NavController) {
     val context = LocalContext.current
-
     val viewModel by remember {
         mutableStateOf(DetailViewModel(context, habitId))
     }
-        if (viewModel.loading) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .padding(8.dp),
-                    strokeWidth = 4.dp,
-                    color = MaterialTheme.colors.primary
-                )
-                Text("Loading")
-            }
-        } else {
-            DetailScreenLoaded(viewModel, navController)
+
+    if (viewModel.loading) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(40.dp)
+                    .padding(8.dp),
+                strokeWidth = 4.dp,
+                color = MaterialTheme.colors.primary
+            )
+            Text("Loading")
         }
+    } else {
+        DetailScreenLoaded(viewModel, navController)
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
