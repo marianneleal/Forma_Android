@@ -11,5 +11,5 @@ data class Habit(
     var dueDate: Date?,
 ) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    var id: Long = 0
 }

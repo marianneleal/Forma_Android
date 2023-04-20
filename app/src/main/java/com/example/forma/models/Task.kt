@@ -15,8 +15,10 @@ import java.util.UUID
     ]
 )
 data class Task(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     var completed: Boolean,
-    val habitId: Int,
-)
+    var habitId: Long,
+){
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+}

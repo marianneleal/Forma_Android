@@ -10,7 +10,8 @@ import com.example.forma.models.Task
 @TypeConverters(Converter::class)
 abstract class HabitDatabase: RoomDatabase() {
 
-    abstract val habitDao: HabitDatabaseDao
+    abstract val habitDao: HabitDao
+    abstract val taskDao: TaskDao
 }
     lateinit var INSTANCE: HabitDatabase
     fun getDatabase(context: Context): HabitDatabase {

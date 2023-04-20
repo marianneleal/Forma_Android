@@ -9,17 +9,16 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.forma.data.HabitViewModel
+import com.example.forma.data.HomeViewModel
 import com.example.forma.screens.Screen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Navigation(navController: NavHostController) {
-    val context = LocalContext.current
 
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
         composable(route = "home") {
-            HomeScreen(navController = navController, viewModel = HabitViewModel())
+            HomeScreen(navController = navController)
         }
         composable(
             route = "detail" + "/{habitId}",
