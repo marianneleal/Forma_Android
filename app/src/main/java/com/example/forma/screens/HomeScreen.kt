@@ -45,17 +45,17 @@ fun HomeScreen(navController: NavController) {
             ) {
 
             HabitList(viewModel = viewModel, navController = navController)
-                FloatingActionButton(
-                    onClick = {
-                        navController.navigate(Screen.DetailScreen.withArgs("0"))
-                    },
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(16.dp)
-                ) {
-                    Icon(Icons.Filled.Add, contentDescription = "Add Habit")
-                }
+
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(Screen.DetailScreen.withArgs("0")) },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp)
+            ) {
+                Icon(Icons.Filled.Add, contentDescription = "Add Habit")
             }
+        }
 
         },
     )
