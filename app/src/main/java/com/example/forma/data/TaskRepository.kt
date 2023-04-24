@@ -1,6 +1,7 @@
 package com.example.forma.data
 import android.content.Context
 import com.example.forma.models.Task
+import com.example.forma.models.TasksAndCompletedTasks
 
 class TaskRepository(context: Context) {
     private val database = getDatabase(context)
@@ -8,10 +9,6 @@ class TaskRepository(context: Context) {
 
     suspend fun getAllTasks(): List<Task> {
         return taskDao.getAll()
-    }
-
-    suspend fun getTaskById(id: Long): Task? {
-        return taskDao.getById(id)
     }
 
     suspend fun insert(task: Task) {

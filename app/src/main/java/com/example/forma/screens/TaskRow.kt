@@ -39,7 +39,7 @@ fun TaskRow(task: Task, onClick: () -> Unit) {
                     onClick()
                 })
             Spacer(modifier = Modifier.width(6.dp))
-            Text(text = task.name, style = if (!completed) MaterialTheme.typography.h6 else MaterialTheme.typography.h6.copy(color = Color.LightGray))
+            Text(text = task.name, color = if (!completed) Color.Black else Color.LightGray)
         }
     }
 }

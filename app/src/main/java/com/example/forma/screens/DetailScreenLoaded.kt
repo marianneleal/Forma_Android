@@ -7,7 +7,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,10 +22,12 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.*
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.forma.R
 import com.example.forma.data.DetailViewModel
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
@@ -64,7 +65,6 @@ fun DetailScreenLoaded(viewModel: DetailViewModel, navController: NavController)
     val datePickerDialog = DatePickerDialog(
         LocalContext.current,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            // viewModel.habit.dueDate = Date(mYear, mMonth, mDayOfMonth)
             mDate.value = Date(mYear, mMonth, mDayOfMonth)
         }, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH)
     )
@@ -329,6 +329,7 @@ fun DetailScreenLoaded(viewModel: DetailViewModel, navController: NavController)
                     .padding(padding)
             ) {
                 FloatingActionButton(
+
                     onClick = {
                         viewModel.habit.name = name
                         viewModel.habit.color = selectedColor.toArgb()
@@ -342,7 +343,7 @@ fun DetailScreenLoaded(viewModel: DetailViewModel, navController: NavController)
                         .align(Alignment.BottomEnd)
                         .padding(16.dp)
                 ) {
-                    Text("Save")
+                    Icon(painter = painterResource(id = R.drawable.icon_save), contentDescription = "Save")
                 }
             }
     },

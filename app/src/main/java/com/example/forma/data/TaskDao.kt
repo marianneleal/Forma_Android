@@ -2,6 +2,7 @@ package com.example.forma.data
 
 import androidx.room.*
 import com.example.forma.models.Task
+import com.example.forma.models.TasksAndCompletedTasks
 
 @Dao
 interface TaskDao {
@@ -23,4 +24,5 @@ interface TaskDao {
 
     @Query("SELECT * FROM tasks WHERE habitId = :id")
     suspend fun getTasksByHabitId(id: Long): MutableList<Task>
+
 }
