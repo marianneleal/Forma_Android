@@ -1,7 +1,6 @@
 package com.example.forma.data
 import android.content.Context
 import com.example.forma.models.Task
-import com.example.forma.models.TasksAndCompletedTasks
 
 class TaskRepository(context: Context) {
     private val database = getDatabase(context)

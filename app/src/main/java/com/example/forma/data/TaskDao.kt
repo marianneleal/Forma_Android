@@ -2,7 +2,6 @@ package com.example.forma.data
 
 import androidx.room.*
 import com.example.forma.models.Task
-import com.example.forma.models.TasksAndCompletedTasks
 
 @Dao
 interface TaskDao {
