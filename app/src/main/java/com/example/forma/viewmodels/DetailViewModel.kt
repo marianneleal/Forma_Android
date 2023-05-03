@@ -1,4 +1,4 @@
-package com.example.forma.data
+package com.example.forma.viewmodels
 
 import android.content.Context
 import android.util.Log
@@ -6,12 +6,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.forma.data.HabitRepository
+import com.example.forma.data.TaskRepository
 import com.example.forma.models.Habit
 import com.example.forma.models.Task
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DetailViewModel(context: Context, habitId: Long): ViewModel() {
     private val habitRepository: HabitRepository = HabitRepository(context)

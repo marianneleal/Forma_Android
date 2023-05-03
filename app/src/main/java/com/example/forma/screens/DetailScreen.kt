@@ -11,7 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import com.example.forma.data.DetailViewModel
+import com.example.forma.viewmodels.DetailViewModel
 import com.example.forma.screens.DetailScreenLoaded
 import java.util.*
 

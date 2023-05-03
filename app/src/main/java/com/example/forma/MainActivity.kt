@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.*
 import androidx.room.Room
-import com.example.forma.data.HabitDatabase
+import com.example.forma.data.FormaDatabase
 import com.example.forma.data.HabitRepository
 import com.example.forma.ui.theme.FormaTheme
 
@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val db = Room.databaseBuilder(
             applicationContext,
-            HabitDatabase::class.java,
+            FormaDatabase::class.java,
             "HabitDatabase"
         ).build()
         val habitRepository = HabitRepository(applicationContext as Application)

@@ -24,16 +24,14 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.*
-import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.forma.R
-import com.example.forma.data.DetailViewModel
+import com.example.forma.viewmodels.DetailViewModel
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 
