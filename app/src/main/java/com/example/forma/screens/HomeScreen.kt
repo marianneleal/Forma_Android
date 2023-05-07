@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.forma.viewmodels.HomeViewModel
 import com.example.forma.screens.Screen
+import com.example.forma.screens.HabitList
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -53,72 +54,7 @@ fun HomeScreen(navController: NavController) {
                 Icon(Icons.Filled.Add, contentDescription = "Add Habit")
             }
         }
-
         },
     )
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-private fun HabitList(viewModel: HomeViewModel, navController: NavController) {
-    val habits by viewModel.habits.collectAsState(emptyList())
-
-    LazyColumn {
-        items(habits.size, key = {index -> habits[index].id}) { index ->
-            val habit = habits[index]
-            val dismissState = rememberDismissState()
-            if (dismissState.isDismissed(DismissDirection.EndToStart)) {
-                viewModel.deleteHabit(habit)
-            }
-            SwipeToDismiss(
-                state = dismissState,
-                modifier = Modifier
-                    .padding(vertical = Dp(1f)),
-                directions = setOf(
-                    DismissDirection.EndToStart
-                ),
-                dismissThresholds = { direction ->
-                    FractionalThreshold(if (direction == DismissDirection.EndToStart) 0.1f else 0.05f)
-                },
-                background = {
-                    val color by animateColorAsState(
-                        when (dismissState.targetValue) {
-                            DismissValue.Default -> Color.White
-                            else -> Color.Red
-                        }
-                    )
-                    val alignment = Alignment.CenterEnd
-                    val icon = Icons.Default.Delete
-
-                    val scale by animateFloatAsState(
-                        if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
-                    )
-
-                    Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(color)
-                            .padding(horizontal = Dp(20f)),
-                        contentAlignment = alignment
-                    ) {
-                        Icon(
-                            icon,
-                            contentDescription = "Delete Icon",
-                            modifier = Modifier.scale(scale)
-                        )
-                    }
-                },
-                dismissContent = {
-                    HabitRow(
-                        habit = habit,
-                        onClick = {
-                            navController.navigate(Screen.DetailScreen.route + "/${habit.id}")
-                        },
-
-                        )
-                })
-
-        }
-    }
 }
 

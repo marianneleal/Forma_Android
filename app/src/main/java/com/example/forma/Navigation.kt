@@ -26,7 +26,7 @@ fun Navigation(navController: NavHostController) {
                 }
             )
         ) {
-            DetailScreen(
+            DetailScreenLoading(
                 habitId = it.arguments?.getLong("habitId") ?: -1,
                 navController = navController
             )

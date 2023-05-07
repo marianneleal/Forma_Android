@@ -17,13 +17,13 @@ class DetailViewModel(context: Context, habitId: Long): ViewModel() {
     private val habitRepository: HabitRepository = HabitRepository(context)
     private val taskRepository: TaskRepository = TaskRepository(context)
 
+    private val _tasks = MutableStateFlow<MutableList<Task>>(mutableListOf())
+
+    val tasks: MutableStateFlow<MutableList<Task>>
+        get() = _tasks
     var loading: Boolean
 
     lateinit var habit: Habit
-
-    private val _tasks = MutableStateFlow<MutableList<Task>>(mutableListOf())
-    val tasks: MutableStateFlow<MutableList<Task>>
-        get() = _tasks
 
     init {
         if (habitId > 0) {
